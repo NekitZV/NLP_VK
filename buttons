@@ -1,0 +1,103 @@
+var elem = document.createElement('style');
+elem.innerHTML = `
+  @font-face {
+    font-family: 'Moscow Sans Regular';
+    src: url('custom/moscowsansregular.ttf');
+  }
+`;
+document.head.appendChild(elem);
+
+function handleMouseEnter(event) {
+    if (!event.target.classList.contains('active')) {
+       event.target.style.borderBottom = '2px solid #007bff';
+    }
+}
+
+function handleMouseLeave(event) {
+    if (!event.target.classList.contains('active')) {
+        event.target.style.borderBottom = '2px solid transparent';
+    }
+}
+
+// Функция для изменения активной кнопки
+function handleButtonClick(event) {
+    // Удаляем активное состояние с других кнопок
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+        button.style.borderBottom = '2px solid transparent';
+    });
+
+    // Делаем нажатую кнопку активной и добавляем черное подчеркивание
+    event.target.classList.add('active');
+    event.target.style.borderBottom = '2px solid #007bff';
+
+    if (event.target.id === 'button1') {
+        const ts_chart_first = document.querySelector("#full_widget");
+        const ts_chart_sec= document.querySelector("#full_widget_1");
+        const ts_chart_th= document.querySelector("#full_widget_2");
+        ts_chart_sec.style.visibility = 'hidden';
+        ts_chart_th.style.visibility = 'hidden';
+        ts_chart_first.style.visibility = 'visible';
+    }
+
+    else if  (event.target.id === 'button2') {
+        const ts_chart_first = document.querySelector("#full_widget");
+        const ts_chart_sec= document.querySelector("#full_widget_1");
+        const ts_chart_th= document.querySelector("#full_widget_2");
+        ts_chart_first.style.visibility = 'hidden';
+        ts_chart_th.style.visibility = 'hidden';
+        ts_chart_sec.style.visibility = 'visible';
+    }
+
+    else if  (event.target.id === 'button3') {
+        const ts_chart_first = document.querySelector("#full_widget");
+        const ts_chart_sec= document.querySelector("#full_widget_1");
+        const ts_chart_th= document.querySelector("#full_widget_2");
+        ts_chart_first.style.visibility = 'hidden';
+        ts_chart_sec.style.visibility = 'hidden';
+        ts_chart_th.style.visibility = 'visible';
+    }
+}
+
+// Предположим, что w.general.renderTo уже определен и является элементом DOM
+const renderTo = document.getElementById(w.general.renderTo);
+
+// Очищаем содержимое renderTo, если нужно
+renderTo.innerHTML = '';
+
+//display: flex; justify-content: space-between; flex: 1;
+
+/*const buttonsHTML = `
+<div class = "button-container" style = "width:100%;height:40px;border-radius: 12px;background-color: #f9f9f9;box-shadow: 0 4px 12px rgba(0,0,0,0.2);opacity: 1;font-family: 'Moscow Sans Regular';display: flex; justify-content: space-between; flex: 1;">
+    <button class = "tab-button active" id = "button1" style = "width:33.3%;border: none;background: none;font-size: 13px;cursor: pointer;opacity: 1;font-family: 'Moscow Sans Regular'; border-bottom: 2px solid #007bff;">ТС</button>
+    <button class = "tab-button" id = "button2" style = "width:33.3%;border: none;background: none;font-size: 13px;cursor: pointer;opacity: 1;font-family: 'Moscow Sans Regular';">Автобусы</button>
+    <button class = "tab-button" id = "button3" style = "width:33.3%;border: none;background: none;font-size: 13px;cursor: pointer;opacity: 1;font-family: 'Moscow Sans Regular';">Электробусы</button>
+</div>
+`;*/
+
+const buttonsHTML = `
+<div class="button-container" style="width:100%;height: auto;border-radius: 12px;background-color: #f9f9f9;box-shadow: 0 4px 12px rgba(0,0,0,0.2);opacity: 1;font-family: 'Moscow Sans Regular';display: flex; justify-content: space-between;">
+    <button class="tab-button active" id="button1" style="padding: 1.3em 3em;font-size: 12px;border-radius:10px 0 0 10px;text-transform: uppercase;letter-spacing: 2.5px;font-weight: 500;color: #000;background-color: #fff;border: none;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);transition: all 0.3s ease 0s;cursor: pointer;outline: none;font-family: 'Moscow Sans Regular';border-bottom: 2px solid #007bff;"">ТС</button>
+    <button class="tab-button" id="button2" style="padding: 1.3em 3em;font-size: 12px;text-transform: uppercase;letter-spacing: 2.5px;font-weight: 500;color: #000;background-color: #fff;border: none;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);transition: all 0.3s ease 0s;cursor: pointer;outline: none;">Автобусы</button>
+    <button class="tab-button" id="button3" style="padding: 1.3em 3em;font-size: 12px;border-radius:0 10px 10px 0;text-transform: uppercase;letter-spacing: 2.5px;font-weight: 500;color: #000;background-color: #fff;border: none;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);transition: all 0.3s ease 0s;cursor: pointer;outline: none;">Электробусы</button>
+</div>
+`;
+// Вставляем карточки в renderTo
+renderTo.innerHTML = buttonsHTML;
+
+// Добавляем класс 'active' только к нажатой кнопке
+
+// Привязываем обработчики событий к кнопкам
+document.getElementById('button1').addEventListener('click', handleButtonClick);
+document.getElementById('button2').addEventListener('click', handleButtonClick);
+document.getElementById('button3').addEventListener('click', handleButtonClick);
+// Привязываем обработчики событий к кнопкам
+document.querySelectorAll('.tab-button').forEach(button => {
+    button.addEventListener('mouseenter', handleMouseEnter);
+    button.addEventListener('mouseleave', handleMouseLeave);
+    button.addEventListener('click', handleButtonClick);
+});
+
+
+
+
