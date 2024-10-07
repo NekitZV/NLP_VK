@@ -18,39 +18,87 @@ const x_names = items.map(function(item) {
     };
 });
 
+const vid_ts = items.map(function(item) {
+    return {
+        name: item.keys[1] 
+    };
+});
+
 const yz_fil = items.map(function(item) {
     return {
         y: item.values[0]  
     };
 });
-
 const sz_fil = items.map(function(item) {
     return {
         y: item.values[1]  
     };
 });
-
 const ts_fil = items.map(function(item) {
     return {
         y: item.values[2]  
     };
 });
-
 const y_fil = items.map(function(item) {
     return {
         y: item.values[3]  
     };
 });
-
 const sv_fil = items.map(function(item) {
     return {
         y: item.values[4]  
     };
 });
 
-const vid_ts = items.map(function(item) {
+const yz_fil_1 = items.map(function(item) {
     return {
-        name: item.keys[1] 
+        y: item.values[5]  
+    };
+});
+const sz_fil_1= items.map(function(item) {
+    return {
+        y: item.values[6]  
+    };
+});
+const ts_fil_1 = items.map(function(item) {
+    return {
+        y: item.values[7]  
+    };
+});
+const y_fil_1 = items.map(function(item) {
+    return {
+        y: item.values[8]  
+    };
+});
+const sv_fil_1 = items.map(function(item) {
+    return {
+        y: item.values[9]  
+    };
+});
+
+const yz_fil_2 = items.map(function(item) {
+    return {
+        y: item.values[10]  
+    };
+});
+const sz_fil_2= items.map(function(item) {
+    return {
+        y: item.values[11]  
+    };
+});
+const ts_fil_2 = items.map(function(item) {
+    return {
+        y: item.values[12]  
+    };
+});
+const y_fil_2 = items.map(function(item) {
+    return {
+        y: item.values[13]  
+    };
+});
+const sv_fil_2 = items.map(function(item) {
+    return {
+        y: item.values[14]  
     };
 });
 
@@ -60,7 +108,7 @@ console.log(vid_ts_value);
 // Очищаем содержимое renderTo, если нужно
 renderTo.innerHTML = '';
 
-function chart_viz(block) {
+function chart_viz(block, yz, sz, ts, y, sv) {
 
     Highcharts.chart(block, {
     chart : {
@@ -140,35 +188,35 @@ function chart_viz(block) {
     series: [{
         name: 'ЮЗ',
         color: '#d76c9c',
-        data: yz_fil.map(item => item.y),
+        data: yz.map(item => item.y),
         marker: {
             symbol: 'circle'
         }
     },{
         name: 'СЗ',
         color: '#9370db',
-        data: sz_fil.map(item => item.y),
+        data: sz.map(item => item.y),
         marker: {
             symbol: 'circle'
         }
     },{
         name: 'Ц',
         color: '#f0ad4e',
-        data: ts_fil.map(item => item.y),
+        data: ts.map(item => item.y),
         marker: {
             symbol: 'circle'
         }
     },{
         name: 'СВ',
         color: '#5bc0de',
-        data: sv_fil.map(item => item.y),
+        data: sv.map(item => item.y),
         marker: {
             symbol: 'circle'
         }
     },{
         name: 'Ю',
         color: '#d9534f',
-        data: y_fil.map(item => item.y),
+        data: y.map(item => item.y),
         marker: {
             symbol: 'circle'
         }
@@ -190,6 +238,82 @@ function chart_viz(block) {
     }
 
 });
+
+function handleMouseEnter(event) {
+    if (!event.target.classList.contains('active')) {
+       event.target.style.borderBottom = '2px solid #007bff';
+    }
+}
+
+function handleMouseLeave(event) {
+    if (!event.target.classList.contains('active')) {
+        event.target.style.borderBottom = '2px solid transparent';
+    }
+}
+
+// Функция для изменения активной кнопки
+function handleButtonClick(event) {
+    // Удаляем активное состояние с других кнопок
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+        button.style.borderBottom = '2px solid transparent';
+    });
+
+    // Делаем нажатую кнопку активной и добавляем черное подчеркивание
+    event.target.classList.add('active');
+    event.target.style.borderBottom = '2px solid #007bff';
+
+    if (event.target.id === 'button1') {
+        const cardHTML = `
+        <div id = "full_widget" style="border-radius: 20px;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); overflow: hidden;  width: 1390px;">
+        <div style="background-color: #9ba6a5; padding: 10px 20px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <span style="font-family: 'Moscow Sans Regular'; font-size: 16px; font-weight: bold; color: #FFFFFF;">Количество ТС в ремонте по филиалам
+        </span>
+        </div>
+        <div id = "ts_repair" style = "display: flex; justify-content: space-between; flex: 1;">
+                <div id="ts_repair_chart" class="chart-container"></div> <!-- Контейнер для графика 2 -->
+        </div>
+        </div>
+        `;
+
+        renderTo.innerHTML = cardHTML;
+        chart_viz('ts_repair_chart', yz_fil, sz_fil, ts_fil, y_fil, sv_fil);
+    }
+
+    else if  (event.target.id === 'button2') {
+        const cardHTML = `
+        <div id = "full_widget" style="border-radius: 20px;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); overflow: hidden;  width: 1390px;">
+        <div style="background-color: #3972f7; padding: 10px 20px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <span style="font-family: 'Moscow Sans Regular'; font-size: 16px; font-weight: bold; color: #FFFFFF;">Количество автобусов в ремонте по филиалам
+        </span>
+        </div>
+        <div id = "ts_repair" style = "display: flex; justify-content: space-between; flex: 1;">
+                <div id="ts_repair_chart" class="chart-container"></div> <!-- Контейнер для графика 2 -->
+        </div>
+        </div>
+        `;
+
+        renderTo.innerHTML = cardHTML;
+        chart_viz('ts_repair_chart', yz_fil_1, sz_fil_1, ts_fil_1, y_fil_1, sv_fil_1);
+    }
+
+    else if  (event.target.id === 'button3') {
+        const cardHTML = `
+        <div id = "full_widget" style="border-radius: 20px;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); overflow: hidden;  width: 1390px;">
+        <div style="background-color: #00A651; padding: 10px 20px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <span style="font-family: 'Moscow Sans Regular'; font-size: 16px; font-weight: bold; color: #FFFFFF;">Количество электробусов в ремонте по филиалам
+        </span>
+        </div>
+        <div id = "ts_repair" style = "display: flex; justify-content: space-between; flex: 1;">
+                <div id="ts_repair_chart" class="chart-container"></div> <!-- Контейнер для графика 2 -->
+        </div>
+        </div>
+        `;
+
+        renderTo.innerHTML = cardHTML;
+        chart_viz('ts_repair_chart', yz_fil_1, sz_fil_1, ts_fil_1, y_fil_1, sv_fil_1);
+    }
+}
 
 // Функция для проверки наличия элементов и применения стилей
 function applyStyles() {
@@ -244,11 +368,20 @@ main_chart.forEach((card) => {
     }
   );
 });
-
-
 }
 
-if (vid_ts_value.includes('Все ТС')) {
+// Привязываем обработчики событий к кнопкам
+document.getElementById('button1').addEventListener('click', handleButtonClick);
+document.getElementById('button2').addEventListener('click', handleButtonClick);
+document.getElementById('button3').addEventListener('click', handleButtonClick);
+// Привязываем обработчики событий к кнопкам
+document.querySelectorAll('.tab-button').forEach(button => {
+    button.addEventListener('mouseenter', handleMouseEnter);
+    button.addEventListener('mouseleave', handleMouseLeave);
+    button.addEventListener('click', handleButtonClick);
+});
+
+/*if (vid_ts_value.includes('Все ТС')) {
         const cardHTML = `
         <div id = "full_widget" style="border-radius: 20px;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); overflow: hidden;  width: 1390px;">
         <div style="background-color: #9ba6a5; padding: 10px 20px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
@@ -304,4 +437,5 @@ else if (vid_ts_value.includes('Электробусы')){
         chart_viz('ts_repair_chart_2');
         const ts_chart_th= document.querySelector("#full_widget_2");
         ts_chart_th.style.visibility = 'hidden';
-}
+}*/
+
